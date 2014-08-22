@@ -12,16 +12,31 @@
         function startSendingCoords() {
             //var socket = new SockJS("/test/myHandler");
             var socket = new WebSocket("ws://localhost:8080/test/myHandler");
-            socket.send("HELLO WORLD");
-            /*var stompClient = Stomp.over(socket);
 
-            stompClient.connect({}, function(frame) {
-
-            });*/
-            //setTimeout(startSendingCoords, 2000);
+            socket.onopen = function () {
+                sendCoordsRecursively(this);
+            };
+            socket.onmessage = function (event) {
+                addCoordinate(JSON.parse(event.data));
+            };
+        }
+        function sendCoordsRecursively(socket) {
+            socket.send(JSON.stringify(
+                {
+                    x:Math.random(),
+                    y:Math.random()
+                }));
+            setTimeout(function(){ return sendCoordsRecursively(socket); }, 2000);
+        }
+        function addCoordinate(coords) {
+            var para = document.createElement("p");
+            var node = document.createTextNode("X: " + coords.x + " Y: " + coords.y);
+            para.appendChild(node);
+            document.getElementById("generatedCoords").appendChild(para);
         }
     </script>
     <body onLoad="startSendingCoords()">
         <h1>Sending of coordinates is started...</h1>
+        <div id="generatedCoords"></div>
     </body>
 </html>
