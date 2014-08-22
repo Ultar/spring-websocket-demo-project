@@ -7,8 +7,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home</title>
     </head>
-    <body>
-        <h1>Hello World!</h1>
-        <p>This is the homepage!</p>
+   <script type="text/javascript">
+        function startSendingCoords() {
+            var socket = new WebSocket("ws://localhost:8080/test/myHandler");
+            /*var stompClient = Stomp.over(socket);
+
+            stompClient.connect({}, function(frame) {
+
+            });*/
+            //setTimeout(startSendingCoords, 2000);
+        }
+   </script>
+    <body onLoad="startSendingCoords()">
+        <h1>Sending of coordinates is started...</h1>
     </body>
 </html>
