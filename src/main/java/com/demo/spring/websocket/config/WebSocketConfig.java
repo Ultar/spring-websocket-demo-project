@@ -26,7 +26,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         log.info("registerWebSocket /myHandler");
-        registry.addHandler(myHandler(), "/myHandler").setHandshakeHandler(handshakeHandler());
+        registry.addHandler(myHandler(), "/myHandler")
+                .setHandshakeHandler(handshakeHandler());//.withSockJS();
         log.info("registered /myHandler");
     }
 
